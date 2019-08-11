@@ -14,10 +14,10 @@ namespace WebAddresbookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
 
-        public ContactHelper Create()
+        public ContactHelper Create(ContactData contact)
         {
             GoToContactsPage();
-            FillContactForm(new ContactData("testfn", "testln"));
+            FillContactForm(contact);
             SubmitContactCreation();
             manager.Navigator.ReturnToHomePage();
             return this;
