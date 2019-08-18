@@ -28,9 +28,19 @@ namespace WebAddresbookTests
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
+        public void GoToAddContactsPage()
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
+        }
+
+        internal void GoToEditContactsPage(int v)
+        {
+            driver.FindElement(By.CssSelector("a[href=\"edit.php?id=" + v + "\"]")).Click();
+        }
+
         public void ReturnToHomePage()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("home")).Click();
         }
     }
 }
