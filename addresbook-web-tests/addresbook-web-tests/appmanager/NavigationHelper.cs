@@ -20,26 +20,47 @@ namespace WebAddresbookTests
 
         public void GoToHomePage()
         {
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
 
         public void GoToGroupsPage()
         {
+            if (driver.Url == baseURL + "/addressbook/group.php"
+                && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
         public void GoToAddContactsPage()
         {
+            if (driver.Url == baseURL + "/addressbook/edit.php")
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("add new")).Click();
         }
 
-        internal void GoToEditContactsPage(int v)
+        public void GoToEditContactsPage(int v)
         {
-            driver.FindElement(By.CssSelector("a[href=\"edit.php?id=" + v + "\"]")).Click();
+            if (driver.Url == baseURL + "/addressbook/edit.php?id=" + v)
+            {
+                return;
+            }
+            driver.FindElements(By.CssSelector("img[title=\"Edit\"]"))[v].Click();
         }
 
         public void ReturnToHomePage()
         {
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("home")).Click();
         }
     }
