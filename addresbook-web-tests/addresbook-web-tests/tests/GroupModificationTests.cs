@@ -17,7 +17,7 @@ namespace WebAddresbookTests
             newData.Header = "testgrheader_Mod";
             newData.Footer = "testgrfooter_Mod";
 
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(0, newData);
         }
     }
 }

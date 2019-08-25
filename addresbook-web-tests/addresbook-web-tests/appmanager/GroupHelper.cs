@@ -55,13 +55,6 @@ namespace WebAddresbookTests
             Type(By.Name("group_name"), group.Name);
             Type(By.Name("group_header"), group.Header);
             Type(By.Name("group_footer"), group.Footer);
-            //driver.FindElement(By.Name("group_name")).Click();
-            //driver.FindElement(By.Name("group_name")).Clear();
-            //driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            //driver.FindElement(By.Name("group_header")).Clear();
-            //driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            //driver.FindElement(By.Name("group_footer")).Clear();
-            //driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
             return this;
         }
 
@@ -80,7 +73,20 @@ namespace WebAddresbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name= 'selected[]'])[" + index + "]")).Click();
+            int group_count = driver.FindElements(By.XPath("(//input[@name= 'selected[]'])")).Count();
+
+            if (group_count == 0 || group_count < index+1)
+            {   // в случае, если кол-во элементов на странице меньше заданного индекса, 
+                // добавляем нужное кол-во элементов
+                while (group_count < index + 1)
+                {
+                    GroupData group = new GroupData("testgrname_of_CheckItems");
+                    Create(group);
+                    group_count++;
+                }
+            }
+
+            driver.FindElements(By.XPath("(//input[@name= 'selected[]'])"))[index].Click();
             return this;
         }
 

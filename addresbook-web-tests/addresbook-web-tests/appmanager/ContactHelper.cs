@@ -25,6 +25,7 @@ namespace WebAddresbookTests
 
         public ContactHelper Modify(int v, ContactData newData)
         {
+            SelectContact(v);
             manager.Navigator.GoToEditContactsPage(v);
             FillContactForm(newData);
             SubmitContactModification();
@@ -53,15 +54,6 @@ namespace WebAddresbookTests
             Type(By.Name("middlename"), contact.Middlename);
             Type(By.Name("lastname"), contact.Lastname);
             Type(By.Name("nickname"), contact.Nickname);
-            //driver.FindElement(By.Name("firstname")).Click();
-            //driver.FindElement(By.Name("firstname")).Clear();
-            //driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            //driver.FindElement(By.Name("middlename")).Clear();
-            //driver.FindElement(By.Name("middlename")).SendKeys(contact.Middlename);
-            //driver.FindElement(By.Name("lastname")).Clear();
-            //driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-            //driver.FindElement(By.Name("nickname")).Clear();
-            //driver.FindElement(By.Name("nickname")).SendKeys(contact.Nickname);
             return this;
         }
 
@@ -73,7 +65,20 @@ namespace WebAddresbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name= 'selected[]'])[" + index + "]")).Click();
+            int contact_count = driver.FindElements(By.XPath("(//input[@name= 'selected[]'])")).Count();
+
+            if (contact_count == 0 || contact_count < index + 1)
+            {   // в случае, если кол-во элементов на странице меньше заданного индекса, 
+                // добавляем нужное кол-во элементов
+                while (contact_count < index + 1)
+                {
+                    ContactData contact = new ContactData("testfn_Mod", "testln_Mod");
+                    Create(contact);
+                    contact_count++;
+                }
+            }
+
+            driver.FindElements(By.XPath("(//input[@name= 'selected[]'])"))[index].Click();
             return this;
         }
     }

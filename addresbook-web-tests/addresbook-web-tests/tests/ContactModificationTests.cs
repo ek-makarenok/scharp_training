@@ -17,7 +17,7 @@ namespace WebAddresbookTests
             newData.Middlename = "middlename_Mod";
             newData.Nickname = "nick_Mod";
 
-            app.Contacts.Modify(2, newData);
+            app.Contacts.Modify(0, newData);
         }
     }
 }
